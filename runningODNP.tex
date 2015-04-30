@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage{fancyhdr}
+\usepackage{color}
+\pagestyle{fancy}
+\lhead{New ODNP Commands}
+\rhead{\thepage}
+\cfoot{Ryan Barnes}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\newcommand{\fc}[1]{{\color{blue}\textit{'{#1}'}}}
+\title{New ODNP Commands}
+\author{Ryan Barnes}
+\begin{document}
+\maketitle
+
+
+
+
+
+\section{Introduction}
+
+This is a small writeup for how to run ODNP with the new setup as of 15/04/29.\\
+
+
+First and formost everything that is not NMR is managed by a server program and as of writing this you need to start the server manually. The server manages the connection to the amplifier, the digital attenuator, and also the power meter. This means you can turn the amp on and off automatically from the server, you can set the attenuation value from the server and you can also log the power from the server.\\
+
+\section{To start the Server:}
+\begin{enumerate}
+    \item Open a terminal.
+    \item Navigate to \fc{emxDnp} by typing \fc{cd /opt/topspin/exp/stan/nmr/emxDnp/}.
+    \item Change to root user (don't ask, I'm not as great a hacker as I would like to be). Type \fc{su} and enter root password. It's the usual
+    \item Start the server by typing \fc{python27 instrumentServerEMX.py}.
+\end{enumerate}
+
+That's it.
+
+\section{New Commands}
+Now the important commands. Note everything below is entered into the topspin command line.
+
+\subsection{\fc{mwpower}} 
+
+Sets the attenuation value and the state of the amplifier. Takes user input for the attenuation value for the digital attenuator and the amplifier state (0 = off, 1 = on).
+
+\subsection{\fc{dnpconf}}
+
+Allows you to make changes to relevant odnp parameters. Note that t1type sets the number of t1's to run + zero power t1. That is if you enter 5, the program will run 6 T1's, 5 t1's with vaious microwave powers and 1 t1 with no microwave power. This is \fc{jf\_dnpconf} from CNSI.
+
+\subsection{\fc{dnpexp}}
+
+This runs the dnp experiment. This makes a log spacing for the T1 values. This only runs the set number of T1's and does not do any hidden experiments. This works identically to \fc{rb\_dnp1} and very similarly to \fc{jf\_dnp}.
+
+
+Good luck.
+
+\end{document}
