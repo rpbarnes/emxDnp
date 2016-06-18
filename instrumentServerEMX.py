@@ -40,6 +40,7 @@ def powerLog(fileName,powerConn,stopEvent,*args):#{{{
     timeout = 100
     powerlist = []
     timelist = []
+    absoluteTimeList = []
     startTime = time.time()
     powerConn.read_power()
     count = 0 
@@ -53,6 +54,7 @@ def powerLog(fileName,powerConn,stopEvent,*args):#{{{
             pass
         print 'I just recorded: ',thispower
         timelist.append((time.time()-startTime)) # this will hopefully give us a more human readable time.
+        absoluteTimeList.append(time.asctime())
         if thispower <= -99.9:
             timeoutcount += 1
             if count > timeout:
@@ -62,7 +64,7 @@ def powerLog(fileName,powerConn,stopEvent,*args):#{{{
         count += 1 
         # An autosave thing to save powers list every 50 points 
         if int(count/50.) - (count/50.) == 0: # if we're at a multiple of 50 counts save the list
-            dataToWrite = [('time (s)','power (dBm)')] + zip(timelist,powerlist)
+            dataToWrite = [('time (s)','power (dBm)','absolute time')] + zip(timelist,powerlist,absoluteTimeList)
             csvWrite(fileName,dataToWrite)
             print "I just saved the power file!"
 
